@@ -237,8 +237,8 @@ The CLI should provide:
 - `ts-node`: TypeScript execution for development mode
 
 ### Infrastructure
-- **Repository**: https://github.com/abes140377/homelab-cli
-- **Issues**: https://github.com/abes140377/homelab-cli/issues
+- **Repository**: https://github.com/sflab-io/homelab-cli
+- **Issues**: https://github.com/sflab-io/homelab-cli/issues
 - **License**: MIT
 - **Distribution**: Published as npm package with bin command `homelab`
 

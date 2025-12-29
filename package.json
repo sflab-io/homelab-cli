@@ -6,7 +6,7 @@
   "bin": {
     "homelab": "./bin/run.js"
   },
-  "bugs": "https://github.com/abes140377/homelab-cli/issues",
+  "bugs": "https://github.com/sflab-io/homelab-cli/issues",
   "dependencies": {
     "@oclif/core": "^4",
     "@oclif/plugin-help": "^6",
@@ -48,7 +48,7 @@
     "./dist",
     "./oclif.manifest.json"
   ],
-  "homepage": "https://github.com/abes140377/homelab-cli",
+  "homepage": "https://github.com/sflab-io/homelab-cli",
   "keywords": [
     "oclif"
   ],
@@ -66,7 +66,7 @@
     "topicSeparator": " ",
     "topics": {}
   },
-  "repository": "abes140377/homelab-cli",
+  "repository": "sflab-io/homelab-cli",
   "scripts": {
     "build": "shx rm -rf dist && tsc -b",
     "lint": "eslint",

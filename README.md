@@ -89,7 +89,7 @@ EXAMPLES
   $ homelab config read --path
 ```
 
-_See code: [src/commands/config/read.ts](https://github.com/abes140377/homelab-cli/blob/v0.0.0/src/commands/config/read.ts)_
+_See code: [src/commands/config/read.ts](https://github.com/sflab-io/homelab-cli/blob/v0.0.0/src/commands/config/read.ts)_
 
 ## `homelab config write KEY VALUE`
 
@@ -117,7 +117,7 @@ EXAMPLES
   $ homelab config write colorOutput false
 ```
 
-_See code: [src/commands/config/write.ts](https://github.com/abes140377/homelab-cli/blob/v0.0.0/src/commands/config/write.ts)_
+_See code: [src/commands/config/write.ts](https://github.com/sflab-io/homelab-cli/blob/v0.0.0/src/commands/config/write.ts)_
 
 ## `homelab exec demo`
 
@@ -142,7 +142,7 @@ EXAMPLES
   $ homelab exec demo # Run all demonstration scenarios
 ```
 
-_See code: [src/commands/exec/demo.ts](https://github.com/abes140377/homelab-cli/blob/v0.0.0/src/commands/exec/demo.ts)_
+_See code: [src/commands/exec/demo.ts](https://github.com/sflab-io/homelab-cli/blob/v0.0.0/src/commands/exec/demo.ts)_
 
 ## `homelab help [COMMAND]`
 
@@ -210,7 +210,7 @@ EXAMPLES
   ]
 ```
 
-_See code: [src/commands/module/list.ts](https://github.com/abes140377/homelab-cli/blob/v0.0.0/src/commands/module/list.ts)_
+_See code: [src/commands/module/list.ts](https://github.com/sflab-io/homelab-cli/blob/v0.0.0/src/commands/module/list.ts)_
 
 ## `homelab plugins`
 
@@ -547,7 +547,7 @@ EXAMPLES
   ]
 ```
 
-_See code: [src/commands/project/list.ts](https://github.com/abes140377/homelab-cli/blob/v0.0.0/src/commands/project/list.ts)_
+_See code: [src/commands/project/list.ts](https://github.com/sflab-io/homelab-cli/blob/v0.0.0/src/commands/project/list.ts)_
 
 ## `homelab prompt demo`
 
@@ -569,7 +569,7 @@ EXAMPLES
   $ homelab prompt demo
 ```
 
-_See code: [src/commands/prompt/demo.ts](https://github.com/abes140377/homelab-cli/blob/v0.0.0/src/commands/prompt/demo.ts)_
+_See code: [src/commands/prompt/demo.ts](https://github.com/sflab-io/homelab-cli/blob/v0.0.0/src/commands/prompt/demo.ts)_
 
 ## `homelab proxmox container list`
 
@@ -620,7 +620,7 @@ EXAMPLES
   ]
 ```
 
-_See code: [src/commands/proxmox/container/list.ts](https://github.com/abes140377/homelab-cli/blob/v0.0.0/src/commands/proxmox/container/list.ts)_
+_See code: [src/commands/proxmox/container/list.ts](https://github.com/sflab-io/homelab-cli/blob/v0.0.0/src/commands/proxmox/container/list.ts)_
 
 ## `homelab proxmox template list`
 
@@ -664,7 +664,7 @@ EXAMPLES
   ]
 ```
 
-_See code: [src/commands/proxmox/template/list.ts](https://github.com/abes140377/homelab-cli/blob/v0.0.0/src/commands/proxmox/template/list.ts)_
+_See code: [src/commands/proxmox/template/list.ts](https://github.com/sflab-io/homelab-cli/blob/v0.0.0/src/commands/proxmox/template/list.ts)_
 
 ## `homelab proxmox vm cloudinit VMID`
 
@@ -708,7 +708,7 @@ EXAMPLES
   Configure VM with custom user credentials
 ```
 
-_See code: [src/commands/proxmox/vm/cloudinit.ts](https://github.com/abes140377/homelab-cli/blob/v0.0.0/src/commands/proxmox/vm/cloudinit.ts)_
+_See code: [src/commands/proxmox/vm/cloudinit.ts](https://github.com/sflab-io/homelab-cli/blob/v0.0.0/src/commands/proxmox/vm/cloudinit.ts)_
 
 ## `homelab proxmox vm create TEMPLATE-NAME VM-NAME`
 
@@ -743,7 +743,7 @@ EXAMPLES
   }
 ```
 
-_See code: [src/commands/proxmox/vm/create.ts](https://github.com/abes140377/homelab-cli/blob/v0.0.0/src/commands/proxmox/vm/create.ts)_
+_See code: [src/commands/proxmox/vm/create.ts](https://github.com/sflab-io/homelab-cli/blob/v0.0.0/src/commands/proxmox/vm/create.ts)_
 
 ## `homelab proxmox vm delete [VMIDS]`
 
@@ -791,7 +791,7 @@ EXAMPLES
   }
 ```
 
-_See code: [src/commands/proxmox/vm/delete.ts](https://github.com/abes140377/homelab-cli/blob/v0.0.0/src/commands/proxmox/vm/delete.ts)_
+_See code: [src/commands/proxmox/vm/delete.ts](https://github.com/sflab-io/homelab-cli/blob/v0.0.0/src/commands/proxmox/vm/delete.ts)_
 
 ## `homelab proxmox vm list`
 
@@ -842,7 +842,7 @@ EXAMPLES
   ]
 ```
 
-_See code: [src/commands/proxmox/vm/list.ts](https://github.com/abes140377/homelab-cli/blob/v0.0.0/src/commands/proxmox/vm/list.ts)_
+_See code: [src/commands/proxmox/vm/list.ts](https://github.com/sflab-io/homelab-cli/blob/v0.0.0/src/commands/proxmox/vm/list.ts)_
 
 ## `homelab proxmox vm start [VMIDS]`
 
@@ -884,7 +884,7 @@ EXAMPLES
   }
 ```
 
-_See code: [src/commands/proxmox/vm/start.ts](https://github.com/abes140377/homelab-cli/blob/v0.0.0/src/commands/proxmox/vm/start.ts)_
+_See code: [src/commands/proxmox/vm/start.ts](https://github.com/sflab-io/homelab-cli/blob/v0.0.0/src/commands/proxmox/vm/start.ts)_
 
 ## `homelab proxmox vm stop [VMIDS]`
 
@@ -926,7 +926,7 @@ EXAMPLES
   }
 ```
 
-_See code: [src/commands/proxmox/vm/stop.ts](https://github.com/abes140377/homelab-cli/blob/v0.0.0/src/commands/proxmox/vm/stop.ts)_
+_See code: [src/commands/proxmox/vm/stop.ts](https://github.com/sflab-io/homelab-cli/blob/v0.0.0/src/commands/proxmox/vm/stop.ts)_
 
 ## `homelab vscode [WORKSPACE-NAME]`
 
@@ -957,7 +957,7 @@ EXAMPLES
     $ homelab vscode myworkspace
 ```
 
-_See code: [src/commands/vscode.ts](https://github.com/abes140377/homelab-cli/blob/v0.0.0/src/commands/vscode.ts)_
+_See code: [src/commands/vscode.ts](https://github.com/sflab-io/homelab-cli/blob/v0.0.0/src/commands/vscode.ts)_
 
 ## `homelab zellij [MODULE-NAME]`
 
@@ -999,5 +999,5 @@ EXAMPLES
     $ homelab zellij my-module -l my-layout
 ```
 
-_See code: [src/commands/zellij.ts](https://github.com/abes140377/homelab-cli/blob/v0.0.0/src/commands/zellij.ts)_
+_See code: [src/commands/zellij.ts](https://github.com/sflab-io/homelab-cli/blob/v0.0.0/src/commands/zellij.ts)_
 <!-- commandsstop -->
