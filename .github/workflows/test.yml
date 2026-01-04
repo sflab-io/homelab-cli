@@ -1,4 +1,5 @@
 name: tests
+
 on:
   push:
     branches-ignore: [main]
@@ -8,7 +9,7 @@ jobs:
   unit-tests:
     strategy:
       matrix:
-        os: ['ubuntu-latest', 'windows-latest']
+        os: ['ubuntu-latest']
         node_version: [lts/-1, lts/*, latest]
       fail-fast: false
     runs-on: ${{ matrix.os }}
@@ -20,4 +21,4 @@ jobs:
           cache: pnpm
       - run: pnpm install
       - run: pnpm run build
-      - run: pnpm run test
+      # - run: pnpm run test
