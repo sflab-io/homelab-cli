@@ -15,7 +15,8 @@ jobs:
       matrix:
         # os: ['ubuntu-latest']
         os: ['self-hosted']
-        node_version: [lts/-1, lts/*, latest]
+        node_version: [lts/*]
+        # node_version: [lts/-1, lts/*, latest]
       fail-fast: false
     runs-on: ${{ matrix.os }}
     steps:
