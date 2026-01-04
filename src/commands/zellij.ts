@@ -81,7 +81,7 @@ export default class Zellij extends BaseCommand<typeof Zellij> {
 
     // Construct Zellij config path
     // Layout name is now a directory containing the layout.kdl file
-    const configPath = join(projectsDir, projectName, '.config/zellij', moduleName, layoutName, '.kdl')
+    const configPath = join(projectsDir, projectName, '.config/zellij', moduleName, layoutName + '.kdl')
 
     console.log(configPath)
 
