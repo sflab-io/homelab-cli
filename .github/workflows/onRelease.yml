@@ -5,6 +5,10 @@ on:
     tags:
       - 'v*'
 
+env:
+  MISE_EXPERIMENTAL: true
+  MISE_SOPS_AGE_KEY: ${{ secrets.MISE_SOPS_AGE_KEY }}
+
 jobs:
   publish:
     runs-on: ubuntu-latest
