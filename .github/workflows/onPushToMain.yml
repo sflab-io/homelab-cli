@@ -18,6 +18,10 @@ jobs:
       - uses: actions/checkout@v4
       - uses: jdx/mise-action@v2
       # - uses: actions/setup-node@v4
+      - name: Debug environment
+        run: |
+          echo "GH_PAT is set: ${{ env.GH_PAT != '' }}"
+          env | grep -i gh || true
       - name: Check if version already exists
         id: version-check
         run: |
