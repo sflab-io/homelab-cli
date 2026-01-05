@@ -11,9 +11,6 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - uses: jdx/mise-action@v2
-      # - uses: actions/setup-node@v4
-      #   with:
-      #     node-version: latest
       - run: pnpm install
       - run: pnpm run build
       - run: pnpm run prepack
