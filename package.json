@@ -1,7 +1,7 @@
 {
   "name": "homelab-cli",
   "description": "My homelab CLI",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "author": "Sebastian Freund",
   "bin": {
     "homelab": "./bin/run.js"
