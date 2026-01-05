@@ -12,6 +12,8 @@ env:
 jobs:
   publish:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
     steps:
       - uses: actions/checkout@v4
       - uses: jdx/mise-action@v2
@@ -21,3 +23,12 @@ jobs:
       - run: npm install -g oclif
       - run: mise run oclif:pack:tarballs
       - run: pnpm run postpack
+      - name: Upload tarballs to release
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          # Extract tag name from ref (e.g., refs/tags/v0.3.6 -> v0.3.6)
+          TAG_NAME=${GITHUB_REF#refs/tags/}
+
+          # Upload all tarballs from dist/
+          gh release upload "$TAG_NAME" dist/*.tar.gz --clobber

@@ -20,7 +20,7 @@ $ npm install -g homelab-cli
 $ homelab COMMAND
 running command...
 $ homelab (--version)
-homelab-cli/0.3.5 linux-x64 node-v24.12.0
+homelab-cli/0.3.6 darwin-arm64 node-v22.21.0
 $ homelab --help [COMMAND]
 USAGE
   $ homelab COMMAND

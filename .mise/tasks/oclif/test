@@ -6,7 +6,10 @@ set -euo pipefail
 
 mkdir -p ./tmp/darwin-arm64
 
-tar -xzf dist/homelab-v0.3.2-31cb7ab-darwin-arm64.tar.gz -C ./tmp/darwin-arm64
+# find the darwin-arm64 package in dist/ and extract it to tmp/darwin-arm64
+find dist/ -name "*darwin-arm64.tar.gz" | while read -r file; do
+  tar -xzf "$file" -C ./tmp/darwin-arm64
+done
 
 export PATH="$PWD/tmp/darwin-arm64/homelab/bin:$PATH"
 
