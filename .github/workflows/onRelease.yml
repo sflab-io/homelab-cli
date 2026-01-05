@@ -22,3 +22,4 @@ jobs:
       #   with:
       #     token: ${{ secrets.NPM_TOKEN }}
       # - run: pnpm run postpack
+      - run: mise run oclif:pack:tarballs

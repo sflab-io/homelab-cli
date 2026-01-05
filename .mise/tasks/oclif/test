@@ -1,0 +1,13 @@
+#!/usr/bin/env bash
+
+#MISE description="Test oclif CLI packages"
+
+set -euo pipefail
+
+mkdir -p ./tmp/darwin-arm64
+
+tar -xzf dist/homelab-v0.3.2-31cb7ab-darwin-arm64.tar.gz -C ./tmp/darwin-arm64
+
+export PATH="$PWD/tmp/darwin-arm64/homelab/bin:$PATH"
+
+homelab --version
