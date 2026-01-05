@@ -52,6 +52,11 @@ jobs:
             git commit -am "chore: update README.md"
             git push -u origin ${{ github.ref_name }}
           fi
+      # - name: Create and push tag
+      #   if: ${{ steps.version-check.outputs.skipped == 'false' }}
+      #   run: |
+      #     git tag ${{ steps.version-check.outputs.tag }}
+      #     git push origin ${{ steps.version-check.outputs.tag }}
       - name: Create Github Release
         uses: ncipollo/release-action@2c591bcc8ecdcd2db72b97d6147f871fcd833ba5
         if: ${{ steps.version-check.outputs.skipped == 'false' }}
