@@ -17,9 +17,9 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - uses: jdx/mise-action@v2
-      - name: Export mise environment
-        run: |
-          mise env | grep '^export GH_PAT=' | sed 's/^export //' >> $GITHUB_ENV
+      # - name: Export mise environment
+      #   run: |
+      #     mise env | grep '^export GH_PAT=' | sed 's/^export //' >> $GITHUB_ENV
       - name: Check if version already exists
         id: version-check
         run: |

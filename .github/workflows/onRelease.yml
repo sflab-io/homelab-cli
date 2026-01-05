@@ -18,9 +18,6 @@ jobs:
       - run: pnpm install
       - run: pnpm run build
       - run: pnpm run prepack
-      # - uses: JS-DevTools/npm-publish@19c28f1ef146469e409470805ea4279d47c3d35c
-      #   with:
-      #     token: ${{ secrets.NPM_TOKEN }}
-      # - run: pnpm run postpack
       - run: npm install -g oclif
       - run: mise run oclif:pack:tarballs
+      - run: pnpm run postpack
