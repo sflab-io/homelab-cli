@@ -596,7 +596,7 @@ ARGUMENTS
 
 FLAGS
   -k, --key=<value>   [default: ~/.ssh/admin_id_ecdsa] Path to SSH private key
-  -u, --user=<value>  [default: admin] SSH username
+  -u, --user=<value>  [default: root] SSH username
 
 GLOBAL FLAGS
   --experimental        Enable experimental commands and features

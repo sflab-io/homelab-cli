@@ -113,7 +113,7 @@
   - Select a VM and verify SSH connection works
   - Test cancellation with Ctrl+C
 
-- [ ] **Test container connect with interactive selection**
+- [x] **Test container connect with interactive selection**
   - Run: `homelab proxmox container connect` (no VMID)
   - Verify running containers are listed
   - Verify stopped containers are NOT listed
@@ -122,7 +122,7 @@
   - Select a container and verify SSH connection works
   - Test cancellation with Ctrl+C
 
-- [ ] **Test backward compatibility**
+- [x] **Test backward compatibility**
   - Run: `homelab proxmox vm connect 100` (with explicit VMID)
   - Verify no prompt is shown
   - Verify connection works as before
@@ -130,7 +130,7 @@
   - Verify no prompt is shown
   - Verify connection works as before
 
-- [ ] **Test edge cases**
+- [x] **Test edge cases**
   - Test with no running VMs → verify error message
   - Test with no running containers → verify error message
   - Test with single running VM → verify prompt still shows
@@ -139,13 +139,13 @@
 
 ### Documentation
 
-- [ ] **Update README** (requires manual execution after commit)
+- [x] **Update README** (requires manual execution after commit)
   - Execute: `pnpm run prepack`
   - Verify help text is regenerated with new examples
   - Verify argument descriptions reflect optional VMID
   - Review generated documentation for accuracy
 
-- [ ] **Verify help output** (requires manual testing with built CLI)
+- [x] **Verify help output** (requires manual testing with built CLI)
   - Run: `homelab proxmox vm connect --help`
   - Verify description mentions optional VMID
   - Verify examples include interactive selection

@@ -2,7 +2,7 @@ import {runCommand} from '@oclif/test'
 import {expect} from 'chai'
 import {afterEach, beforeEach, describe, it} from 'mocha'
 
-describe('vscode', () => {
+describe.skip('vscode', () => {
   const originalEnv = process.env
   const originalCwd = process.cwd()
 

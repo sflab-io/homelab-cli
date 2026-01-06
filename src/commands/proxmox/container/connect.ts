@@ -42,7 +42,7 @@ export default class ProxmoxContainerConnect extends BaseCommand<typeof ProxmoxC
     }),
     user: Flags.string({
       char: 'u',
-      default: 'admin',
+      default: 'root',
       description: 'SSH username',
     }),
   };
@@ -93,9 +93,24 @@ export default class ProxmoxContainerConnect extends BaseCommand<typeof ProxmoxC
       vmid = Number.parseInt(selectionResult.data.split(' - ')[0], 10);
     }
 
-    this.log(`Connecting to container ${vmid} as ${user}...`);
+    // Check connection method first to display appropriate message
+    const ipResult = await sshService.getResourceIPAddress(vmid, 'lxc');
 
-    // Establish SSH connection
+    if (ipResult.success) {
+      // IP available - use IP-based connection
+      this.log(`Connecting to container ${vmid} as ${user}...`);
+    } else {
+      // IP not available - try FQDN fallback
+      this.log(`IP address not available for container ${vmid}, trying FQDN fallback...`);
+
+      const fqdnResult = await sshService.getResourceFQDN(vmid, 'lxc');
+
+      if (fqdnResult.success) {
+        this.log(`Connecting to container ${vmid} (${fqdnResult.data}) as ${user}...`);
+      }
+    }
+
+    // Establish SSH connection (will handle fallback internally)
     const result = await sshService.connectSSH(vmid, 'lxc', user, key);
 
     if (!result.success) {

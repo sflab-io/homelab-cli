@@ -128,8 +128,8 @@ describe('proxmox container connect', () => {
       const {error} = await runCommand('proxmox container connect 99999');
 
       if (error) {
-        // Either Proxmox is not configured, or container is not found
-        expect(error.message).to.match(/PROXMOX_|not found|Failed to retrieve/);
+        // Either Proxmox is not configured, container is not found, or both IP and FQDN resolution failed
+        expect(error.message).to.match(/PROXMOX_|not found|Failed to retrieve|FQDN resolution failed/);
       }
     });
 

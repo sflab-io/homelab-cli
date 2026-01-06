@@ -93,9 +93,24 @@ export default class ProxmoxVMConnect extends BaseCommand<typeof ProxmoxVMConnec
       vmid = Number.parseInt(selectionResult.data.split(' - ')[0], 10);
     }
 
-    this.log(`Connecting to VM ${vmid} as ${user}...`);
+    // Check connection method first to display appropriate message
+    const ipResult = await sshService.getResourceIPAddress(vmid, 'qemu');
 
-    // Establish SSH connection
+    if (ipResult.success) {
+      // IP available - use IP-based connection
+      this.log(`Connecting to VM ${vmid} as ${user}...`);
+    } else {
+      // IP not available - try FQDN fallback
+      this.log(`IP address not available for VM ${vmid}, trying FQDN fallback...`);
+
+      const fqdnResult = await sshService.getResourceFQDN(vmid, 'qemu');
+
+      if (fqdnResult.success) {
+        this.log(`Connecting to VM ${vmid} (${fqdnResult.data}) as ${user}...`);
+      }
+    }
+
+    // Establish SSH connection (will handle fallback internally)
     const result = await sshService.connectSSH(vmid, 'qemu', user, key);
 
     if (!result.success) {

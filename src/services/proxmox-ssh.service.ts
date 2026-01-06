@@ -19,29 +19,55 @@ export class ProxmoxSSHService {
 
   /**
    * Establishes an SSH connection to a Proxmox resource.
+   * Uses IP address if available, falls back to FQDN if not.
    * @param vmid The VMID of the resource
    * @param resourceType Type of resource ('qemu' for VM, 'lxc' for container)
    * @param username SSH username (default: 'admin')
    * @param keyPath Path to SSH private key (default: '~/.ssh/admin_id_ecdsa')
-   * @returns Result indicating success or ServiceError
+   * @returns Result with connection info or ServiceError
    */
   async connectSSH(
     vmid: number,
     resourceType: 'lxc' | 'qemu',
     username = 'admin',
     keyPath = '~/.ssh/admin_id_ecdsa',
-  ): Promise<Result<void, ServiceError>> {
-    // Resolve IP address
+  ): Promise<
+    Result<{connectionMethod: 'fqdn' | 'ip'; target: string}, ServiceError>
+  > {
+    // Try IP-based connection first
     const ipResult = await this.getResourceIPAddress(vmid, resourceType);
 
-    if (!ipResult.success) {
-      return failure(ipResult.error);
+    let connectionTarget: string;
+    let connectionMethod: 'fqdn' | 'ip';
+
+    if (ipResult.success) {
+      connectionTarget = ipResult.data;
+      connectionMethod = 'ip';
+    } else {
+      // Fallback to FQDN
+      const fqdnResult = await this.getResourceFQDN(vmid, resourceType);
+
+      if (!fqdnResult.success) {
+        // Cannot connect via IP or FQDN
+        const resourceTypeName = resourceType === 'qemu' ? 'VM' : 'container';
+        return failure(
+          new ServiceError(
+            `Cannot connect to ${resourceTypeName} ${vmid}: IP address not available and FQDN resolution failed.`,
+            {
+              cause: fqdnResult.error,
+              resourceType,
+              vmid,
+            },
+          ),
+        );
+      }
+
+      connectionTarget = fqdnResult.data;
+      connectionMethod = 'fqdn';
     }
 
-    const ipAddress = ipResult.data;
-
     // Construct SSH command
-    const sshArgs = ['-i', keyPath, `${username}@${ipAddress}`];
+    const sshArgs = ['-i', keyPath, `${username}@${connectionTarget}`];
 
     // Execute SSH command with inherited stdio for interactive session
     const execResult = await this.commandExecutor.executeCommand('ssh', sshArgs, {
@@ -52,7 +78,8 @@ export class ProxmoxSSHService {
       return failure(
         new ServiceError(`SSH connection failed: ${execResult.error.message}`, {
           cause: execResult.error,
-          ipAddress,
+          connectionMethod,
+          connectionTarget,
           keyPath,
           resourceType,
           username,
@@ -61,8 +88,49 @@ export class ProxmoxSSHService {
       );
     }
 
-    // eslint-disable-next-line unicorn/no-useless-undefined
-    return success(undefined);
+    return success({connectionMethod, target: connectionTarget});
+  }
+
+  /**
+   * Constructs FQDN for a Proxmox resource using its name.
+   * @param vmid The VMID of the resource
+   * @param resourceType Type of resource ('qemu' for VM, 'lxc' for container)
+   * @returns Result containing FQDN or ServiceError
+   */
+  async getResourceFQDN(
+    vmid: number,
+    resourceType: 'lxc' | 'qemu',
+  ): Promise<Result<string, ServiceError>> {
+    // Fetch resources from repository
+    const resourcesResult = await this.repository.listResources(resourceType);
+
+    if (!resourcesResult.success) {
+      return failure(
+        new ServiceError(`Failed to retrieve ${resourceType} resources from Proxmox API`, {
+          cause: resourcesResult.error,
+          resourceType,
+          vmid,
+        }),
+      );
+    }
+
+    // Find resource with matching VMID
+    const resource = resourcesResult.data.find((r) => r.vmid === vmid);
+
+    if (!resource) {
+      const resourceTypeName = resourceType === 'qemu' ? 'VM' : 'container';
+      return failure(
+        new ServiceError(`${resourceTypeName} with VMID ${vmid} not found`, {
+          resourceType,
+          vmid,
+        }),
+      );
+    }
+
+    // Construct FQDN: <name>.home.sflab.io
+    const fqdn = `${resource.name}.home.sflab.io`;
+
+    return success(fqdn);
   }
 
   /**

@@ -112,8 +112,8 @@ describe('proxmox vm connect', () => {
       const {error} = await runCommand('proxmox vm connect 99999');
 
       if (error) {
-        // Either Proxmox is not configured, or VM is not found
-        expect(error.message).to.match(/PROXMOX_|not found|Failed to retrieve/);
+        // Either Proxmox is not configured, VM is not found, or both IP and FQDN resolution failed
+        expect(error.message).to.match(/PROXMOX_|not found|Failed to retrieve|FQDN resolution failed/);
       }
     });
 
