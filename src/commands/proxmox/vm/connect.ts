@@ -2,16 +2,21 @@ import {Args, Flags} from '@oclif/core';
 
 import {ProxmoxSSHFactory} from '../../../factories/proxmox-ssh.factory.js';
 import {BaseCommand} from '../../../lib/base-command.js';
+import {promptForSelection} from '../../../utils/prompts.js';
 
 export default class ProxmoxVMConnect extends BaseCommand<typeof ProxmoxVMConnect> {
   static args = {
     vmid: Args.integer({
-      description: 'VMID of the VM to connect to',
-      required: true,
+      description: 'VMID of the VM to connect to (optional, prompts if not provided)',
+      required: false,
     }),
   };
   static description = 'Establish SSH connection to a Proxmox VM';
   static examples = [
+    {
+      command: '<%= config.bin %> <%= command.id %>',
+      description: 'Interactively select a running VM to connect to',
+    },
     {
       command: '<%= config.bin %> <%= command.id %> 100',
       description: 'Connect to VM with VMID 100 using default credentials',
@@ -45,11 +50,48 @@ export default class ProxmoxVMConnect extends BaseCommand<typeof ProxmoxVMConnec
   async run(): Promise<void> {
     await this.parse(ProxmoxVMConnect);
 
-    const {vmid} = this.args;
+    let {vmid} = this.args;
     const {key, user} = this.flags;
 
     // Create SSH service using factory
     const sshService = ProxmoxSSHFactory.createProxmoxSSHService();
+
+    // If VMID not provided, prompt user to select from running VMs
+    if (vmid === undefined) {
+      const runningResult = await sshService.getRunningResources('qemu');
+
+      if (!runningResult.success) {
+        this.error(runningResult.error.message, {exit: 1});
+      }
+
+      if (runningResult.data.length === 0) {
+        this.error(
+          'No running VMs found. Start a VM first or provide a VMID explicitly.',
+          {exit: 1},
+        );
+      }
+
+      // Format choices for selection prompt
+      const choices = runningResult.data.map((vm) => {
+        const ipDisplay = vm.ipv4Address ?? 'No IP';
+        return `${vm.vmid} - ${vm.name} (${ipDisplay})`;
+      });
+
+      // Show selection prompt
+      const selectionResult = await promptForSelection({
+        choices,
+        message: 'Select a VM to connect to:',
+      });
+
+      if (!selectionResult.success) {
+        // User cancelled (Ctrl+C)
+        this.log('Selection cancelled.');
+        return;
+      }
+
+      // Extract VMID from selected choice
+      vmid = Number.parseInt(selectionResult.data.split(' - ')[0], 10);
+    }
 
     this.log(`Connecting to VM ${vmid} as ${user}...`);
 

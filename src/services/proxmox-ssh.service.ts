@@ -1,3 +1,4 @@
+import type {ProxmoxVMDTO} from '../models/proxmox-vm.dto.js';
 import type {IProxmoxRepository} from '../repositories/interfaces/proxmox.repository.interface.js';
 import type {Result} from '../utils/result.js';
 
@@ -60,7 +61,8 @@ export class ProxmoxSSHService {
       );
     }
 
-    return success();
+    // eslint-disable-next-line unicorn/no-useless-undefined
+    return success(undefined);
   }
 
   /**
@@ -114,5 +116,33 @@ export class ProxmoxSSHService {
     }
 
     return success(resource.ipv4Address);
+  }
+
+  /**
+   * Retrieves running VMs or containers for interactive selection.
+   * @param resourceType Type of resource ('qemu' for VMs, 'lxc' for containers)
+   * @returns Result containing array of running resources or ServiceError
+   */
+  async getRunningResources(
+    resourceType: 'lxc' | 'qemu',
+  ): Promise<Result<ProxmoxVMDTO[], ServiceError>> {
+    // Fetch all resources from repository
+    const resourcesResult = await this.repository.listResources(resourceType);
+
+    if (!resourcesResult.success) {
+      return failure(
+        new ServiceError(`Failed to retrieve ${resourceType} resources from Proxmox API`, {
+          cause: resourcesResult.error,
+          resourceType,
+        }),
+      );
+    }
+
+    // Filter to only running resources
+    const runningResources = resourcesResult.data.filter(
+      (resource) => resource.status === 'running',
+    );
+
+    return success(runningResources);
   }
 }
