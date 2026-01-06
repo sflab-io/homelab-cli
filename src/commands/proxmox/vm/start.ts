@@ -73,12 +73,14 @@ Successfully started 3 VMs`,
         return
       }
 
+      // Format choices for selection prompt
+      const choices = stoppedVms.map((vm) =>
+        `${vm.vmid} - ${vm.name} (${vm.node}, ${vm.status})`
+      )
+
       // Prompt for VM selection
       const selectionResult = await promptForMultipleSelections({
-        choices: stoppedVms.map((vm) => ({
-          label: `${vm.vmid} - ${vm.name} (${vm.node}, ${vm.status})`,
-          value: vm.vmid,
-        })),
+        choices,
         message: 'Select VMs to start (use space to toggle, enter to confirm):',
       })
 
@@ -87,7 +89,10 @@ Successfully started 3 VMs`,
         return
       }
 
-      vmidsToStart = selectionResult.data.map((item) => item.value)
+      // Extract VMIDs from selected choices
+      vmidsToStart = selectionResult.data.map((choice) =>
+        Number.parseInt(choice.split(' - ')[0], 10)
+      )
 
       if (vmidsToStart.length === 0) {
         this.log('No VMs selected')

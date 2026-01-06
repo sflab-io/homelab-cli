@@ -48,11 +48,11 @@ USAGE
 * [`homelab plugins update`](#homelab-plugins-update)
 * [`homelab project list`](#homelab-project-list)
 * [`homelab prompt demo`](#homelab-prompt-demo)
-* [`homelab proxmox container connect VMID`](#homelab-proxmox-container-connect-vmid)
+* [`homelab proxmox container connect [VMID]`](#homelab-proxmox-container-connect-vmid)
 * [`homelab proxmox container list`](#homelab-proxmox-container-list)
 * [`homelab proxmox template list`](#homelab-proxmox-template-list)
 * [`homelab proxmox vm cloudinit VMID`](#homelab-proxmox-vm-cloudinit-vmid)
-* [`homelab proxmox vm connect VMID`](#homelab-proxmox-vm-connect-vmid)
+* [`homelab proxmox vm connect [VMID]`](#homelab-proxmox-vm-connect-vmid)
 * [`homelab proxmox vm create TEMPLATE-NAME VM-NAME`](#homelab-proxmox-vm-create-template-name-vm-name)
 * [`homelab proxmox vm delete [VMIDS]`](#homelab-proxmox-vm-delete-vmids)
 * [`homelab proxmox vm list`](#homelab-proxmox-vm-list)
@@ -582,17 +582,17 @@ EXAMPLES
 
 _See code: [src/commands/prompt/demo.ts](https://github.com/sflab-io/homelab-cli/blob/v0.3.7/src/commands/prompt/demo.ts)_
 
-## `homelab proxmox container connect VMID`
+## `homelab proxmox container connect [VMID]`
 
 Establish SSH connection to a Proxmox LXC container
 
 ```
 USAGE
-  $ homelab proxmox container connect VMID [--json] [--experimental] [--log-level debug|warn|error|info|trace] [-k <value>] [-u
-    <value>]
+  $ homelab proxmox container connect [VMID] [--json] [--experimental] [--log-level debug|warn|error|info|trace] [-k <value>]
+    [-u <value>]
 
 ARGUMENTS
-  VMID  VMID of the container to connect to
+  [VMID]  VMID of the container to connect to (optional, prompts if not provided)
 
 FLAGS
   -k, --key=<value>   [default: ~/.ssh/admin_id_ecdsa] Path to SSH private key
@@ -608,6 +608,10 @@ DESCRIPTION
   Establish SSH connection to a Proxmox LXC container
 
 EXAMPLES
+  Interactively select a running container to connect to
+
+    $ homelab proxmox container connect
+
   Connect to container with VMID 200 using default credentials
 
     $ homelab proxmox container connect 200
@@ -769,17 +773,17 @@ EXAMPLES
 
 _See code: [src/commands/proxmox/vm/cloudinit.ts](https://github.com/sflab-io/homelab-cli/blob/v0.3.7/src/commands/proxmox/vm/cloudinit.ts)_
 
-## `homelab proxmox vm connect VMID`
+## `homelab proxmox vm connect [VMID]`
 
 Establish SSH connection to a Proxmox VM
 
 ```
 USAGE
-  $ homelab proxmox vm connect VMID [--json] [--experimental] [--log-level debug|warn|error|info|trace] [-k <value>] [-u
-    <value>]
+  $ homelab proxmox vm connect [VMID] [--json] [--experimental] [--log-level debug|warn|error|info|trace] [-k <value>]
+    [-u <value>]
 
 ARGUMENTS
-  VMID  VMID of the VM to connect to
+  [VMID]  VMID of the VM to connect to (optional, prompts if not provided)
 
 FLAGS
   -k, --key=<value>   [default: ~/.ssh/admin_id_ecdsa] Path to SSH private key
@@ -795,6 +799,10 @@ DESCRIPTION
   Establish SSH connection to a Proxmox VM
 
 EXAMPLES
+  Interactively select a running VM to connect to
+
+    $ homelab proxmox vm connect
+
   Connect to VM with VMID 100 using default credentials
 
     $ homelab proxmox vm connect 100
