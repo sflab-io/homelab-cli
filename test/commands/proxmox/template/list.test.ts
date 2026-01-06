@@ -5,7 +5,7 @@ describe('proxmox template list', () => {
     // Integration testing for this command requires a real or mocked Proxmox API
     // The command's behavior is thoroughly tested via:
     // - Config tests (test/config/proxmox.config.test.ts)
-    // - Repository integration tests (test/integration/proxmox-api.integration.test.ts)
+    // - Repository integration tests (test/integration/proxmox.integration.test.ts)
     // - Service tests (test/services/proxmox-template.service.test.ts)
     expect(true).to.be.true;
   });

@@ -2,18 +2,18 @@ import { expect } from 'chai';
 
 import type { RequiredProxmoxConfig } from '../../src/models/schemas/cli-config.schema.js';
 
-import { ProxmoxApiRepository } from '../../src/repositories/proxmox-api.repository.js';
+import { ProxmoxRepository } from '../../src/repositories/proxmox.repository.js';
 
 /**
- * Unit tests for ProxmoxApiRepository.
+ * Unit tests for ProxmoxRepository.
  *
- * Note: Due to ES module constraints, we cannot easily mock the proxmox-api module with sinon.
+ * Note: Due to ES module constraints, we cannot easily mock the proxmox module with sinon.
  * These tests verify the repository's behavior, error handling, and Result type patterns.
- * Integration tests in proxmox-api.integration.test.ts verify actual API communication.
+ * Integration tests in proxmox.integration.test.ts verify actual API communication.
  * Service-level tests verify the integration between service and repository layers.
  */
-describe('ProxmoxApiRepository', () => {
-  let repository: ProxmoxApiRepository;
+describe('ProxmoxRepository', () => {
+  let repository: ProxmoxRepository;
   let config: RequiredProxmoxConfig;
 
   beforeEach(() => {
@@ -28,7 +28,7 @@ describe('ProxmoxApiRepository', () => {
       user: 'root',
     };
 
-    repository = new ProxmoxApiRepository(config);
+    repository = new ProxmoxRepository(config);
   });
 
   describe('setVMConfig', () => {

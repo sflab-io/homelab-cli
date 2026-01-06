@@ -1,5 +1,5 @@
 import {getCliConfig} from '../config/cli.config.js'
-import {ProxmoxApiRepository} from '../repositories/proxmox-api.repository.js'
+import {ProxmoxRepository} from '../repositories/proxmox.repository.js'
 import {ProxmoxTemplateService} from '../services/proxmox-template.service.js'
 
 /**
@@ -38,7 +38,7 @@ export const ProxmoxTemplateFactory = {
       throw new Error('PROXMOX_HOST is required but not configured')
     }
 
-    const repository = new ProxmoxApiRepository(config as Required<typeof config>)
+    const repository = new ProxmoxRepository(config as Required<typeof config>)
     return new ProxmoxTemplateService(repository)
   },
 }

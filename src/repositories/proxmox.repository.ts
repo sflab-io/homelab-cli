@@ -13,7 +13,7 @@ import { type IProxmoxRepository } from './interfaces/proxmox.repository.interfa
  * Implementation of Proxmox repository using proxmox-api npm package.
  * Provides an alternative implementation to the fetch-based repository.
  */
-export class ProxmoxApiRepository implements IProxmoxRepository {
+export class ProxmoxRepository implements IProxmoxRepository {
   private readonly config: RequiredProxmoxConfig;
 
   constructor(config: RequiredProxmoxConfig) {

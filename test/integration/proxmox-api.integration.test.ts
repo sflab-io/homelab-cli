@@ -1,10 +1,10 @@
 import { expect } from 'chai'
 
 import { getCliConfig } from '../../src/config/cli.config.js'
-import { ProxmoxApiRepository } from '../../src/repositories/proxmox-api.repository.js'
+import { ProxmoxRepository } from '../../src/repositories/proxmox.repository.js'
 
 /**
- * Integration tests for ProxmoxApiRepository.
+ * Integration tests for ProxmoxRepository.
  * These tests require a real Proxmox server and are skipped if environment variables are not set.
  *
  * To run these tests, set the following environment variables:
@@ -24,7 +24,7 @@ import { ProxmoxApiRepository } from '../../src/repositories/proxmox-api.reposit
  *   export PROXMOX_PORT=8006
  *   pnpm test
  */
-describe('ProxmoxApiRepository Integration Tests', () => {
+describe('ProxmoxRepository Integration Tests', () => {
   // Check if environment variables are set
   const hasEnvVars = process.env.PROXMOX_USER &&
     process.env.PROXMOX_REALM &&
@@ -41,7 +41,7 @@ describe('ProxmoxApiRepository Integration Tests', () => {
   const describeOrSkip = hasEnvVars ? describe : describe.skip
 
   describeOrSkip('Connection and Template Listing', () => {
-    let repository: ProxmoxApiRepository
+    let repository: ProxmoxRepository
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     let originalEmit: any
 
@@ -67,7 +67,7 @@ describe('ProxmoxApiRepository Integration Tests', () => {
       // Load configuration from environment
       const cliConfig = getCliConfig()
       const config = cliConfig.get('proxmox')
-      repository = new ProxmoxApiRepository(config as Required<typeof config>)
+      repository = new ProxmoxRepository(config as Required<typeof config>)
     })
 
     after(() => {
@@ -186,7 +186,7 @@ describe('ProxmoxApiRepository Integration Tests', () => {
         user: 'root',
       }
 
-      const repository = new ProxmoxApiRepository(invalidConfig)
+      const repository = new ProxmoxRepository(invalidConfig)
       const result = await repository.listTemplates()
 
       expect(result.success).to.be.false
