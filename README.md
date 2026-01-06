@@ -20,7 +20,7 @@ $ npm install -g homelab-cli
 $ homelab COMMAND
 running command...
 $ homelab (--version)
-homelab-cli/0.3.7 linux-x64 node-v24.12.0
+homelab-cli/0.3.7 darwin-arm64 node-v22.21.0
 $ homelab --help [COMMAND]
 USAGE
   $ homelab COMMAND
@@ -48,9 +48,11 @@ USAGE
 * [`homelab plugins update`](#homelab-plugins-update)
 * [`homelab project list`](#homelab-project-list)
 * [`homelab prompt demo`](#homelab-prompt-demo)
+* [`homelab proxmox container connect VMID`](#homelab-proxmox-container-connect-vmid)
 * [`homelab proxmox container list`](#homelab-proxmox-container-list)
 * [`homelab proxmox template list`](#homelab-proxmox-template-list)
 * [`homelab proxmox vm cloudinit VMID`](#homelab-proxmox-vm-cloudinit-vmid)
+* [`homelab proxmox vm connect VMID`](#homelab-proxmox-vm-connect-vmid)
 * [`homelab proxmox vm create TEMPLATE-NAME VM-NAME`](#homelab-proxmox-vm-create-template-name-vm-name)
 * [`homelab proxmox vm delete [VMIDS]`](#homelab-proxmox-vm-delete-vmids)
 * [`homelab proxmox vm list`](#homelab-proxmox-vm-list)
@@ -580,6 +582,51 @@ EXAMPLES
 
 _See code: [src/commands/prompt/demo.ts](https://github.com/sflab-io/homelab-cli/blob/v0.3.7/src/commands/prompt/demo.ts)_
 
+## `homelab proxmox container connect VMID`
+
+Establish SSH connection to a Proxmox LXC container
+
+```
+USAGE
+  $ homelab proxmox container connect VMID [--json] [--experimental] [--log-level debug|warn|error|info|trace] [-k <value>] [-u
+    <value>]
+
+ARGUMENTS
+  VMID  VMID of the container to connect to
+
+FLAGS
+  -k, --key=<value>   [default: ~/.ssh/admin_id_ecdsa] Path to SSH private key
+  -u, --user=<value>  [default: admin] SSH username
+
+GLOBAL FLAGS
+  --experimental        Enable experimental commands and features
+  --json                Format output as json.
+  --log-level=<option>  [default: info] Specify level for logging.
+                        <options: debug|warn|error|info|trace>
+
+DESCRIPTION
+  Establish SSH connection to a Proxmox LXC container
+
+EXAMPLES
+  Connect to container with VMID 200 using default credentials
+
+    $ homelab proxmox container connect 200
+
+  Connect to container with VMID 200 as root user
+
+    $ homelab proxmox container connect 200 --user root
+
+  Connect to container with VMID 200 using custom SSH key
+
+    $ homelab proxmox container connect 200 --key ~/.ssh/custom_key
+
+  Connect to container with VMID 200 using custom user and SSH key
+
+    $ homelab proxmox container connect 200 --user ubuntu --key ~/.ssh/id_rsa
+```
+
+_See code: [src/commands/proxmox/container/connect.ts](https://github.com/sflab-io/homelab-cli/blob/v0.3.7/src/commands/proxmox/container/connect.ts)_
+
 ## `homelab proxmox container list`
 
 List all Proxmox LXC containers
@@ -721,6 +768,51 @@ EXAMPLES
 ```
 
 _See code: [src/commands/proxmox/vm/cloudinit.ts](https://github.com/sflab-io/homelab-cli/blob/v0.3.7/src/commands/proxmox/vm/cloudinit.ts)_
+
+## `homelab proxmox vm connect VMID`
+
+Establish SSH connection to a Proxmox VM
+
+```
+USAGE
+  $ homelab proxmox vm connect VMID [--json] [--experimental] [--log-level debug|warn|error|info|trace] [-k <value>] [-u
+    <value>]
+
+ARGUMENTS
+  VMID  VMID of the VM to connect to
+
+FLAGS
+  -k, --key=<value>   [default: ~/.ssh/admin_id_ecdsa] Path to SSH private key
+  -u, --user=<value>  [default: admin] SSH username
+
+GLOBAL FLAGS
+  --experimental        Enable experimental commands and features
+  --json                Format output as json.
+  --log-level=<option>  [default: info] Specify level for logging.
+                        <options: debug|warn|error|info|trace>
+
+DESCRIPTION
+  Establish SSH connection to a Proxmox VM
+
+EXAMPLES
+  Connect to VM with VMID 100 using default credentials
+
+    $ homelab proxmox vm connect 100
+
+  Connect to VM with VMID 100 as root user
+
+    $ homelab proxmox vm connect 100 --user root
+
+  Connect to VM with VMID 100 using custom SSH key
+
+    $ homelab proxmox vm connect 100 --key ~/.ssh/custom_key
+
+  Connect to VM with VMID 100 using custom user and SSH key
+
+    $ homelab proxmox vm connect 100 --user ubuntu --key ~/.ssh/id_rsa
+```
+
+_See code: [src/commands/proxmox/vm/connect.ts](https://github.com/sflab-io/homelab-cli/blob/v0.3.7/src/commands/proxmox/vm/connect.ts)_
 
 ## `homelab proxmox vm create TEMPLATE-NAME VM-NAME`
 
