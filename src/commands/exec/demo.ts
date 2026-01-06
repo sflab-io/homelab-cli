@@ -13,11 +13,12 @@ import {
 export default class ExecDemo extends BaseCommand<typeof ExecDemo> {
   static description =
     'Demonstrate command execution capabilities (simple commands, working directory, environment variables, streaming, error handling)'
-static examples = [
+  static examples = [
     '<%= config.bin %> <%= command.id %>',
     '<%= config.bin %> <%= command.id %> # Run all demonstration scenarios',
   ]
-private scenarioResults: Array<{name: string; success: boolean}> = []
+  static isExperimental = true
+  private scenarioResults: Array<{name: string; success: boolean}> = []
   private service = new CommandExecutorService()
 
   async run(): Promise<void> {

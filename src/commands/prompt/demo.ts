@@ -11,9 +11,10 @@ import {
  */
 export default class PromptDemo extends BaseCommand<typeof PromptDemo> {
   static description = 'Demonstrate interactive prompts (text, password, select, multi-select)'
-static examples = [
+  static examples = [
     '<%= config.bin %> <%= command.id %>',
   ]
+  static isExperimental = true
 
   async run(): Promise<void> {
     await this.parse(PromptDemo)

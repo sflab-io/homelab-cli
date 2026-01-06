@@ -21,6 +21,7 @@ export default class ConfigWrite extends BaseCommand<typeof ConfigWrite> {
     '<%= config.bin %> <%= command.id %> logLevel debug',
     '<%= config.bin %> <%= command.id %> colorOutput false',
   ]
+  static isExperimental = true
 
   async run(): Promise<void> {
     await this.parse(ConfigWrite)

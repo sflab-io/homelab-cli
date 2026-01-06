@@ -25,6 +25,7 @@ export default class ConfigRead extends BaseCommand<typeof ConfigRead> {
       description: 'Show path to config file',
     }),
   }
+  static isExperimental = true
 
   async run(): Promise<void> {
     await this.parse(ConfigRead)

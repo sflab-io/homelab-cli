@@ -218,8 +218,40 @@ export default class MyCommand extends BaseCommand<typeof MyCommand> {
 **Note**: Commands extend `BaseCommand` which provides:
 - Automatic parsing of args and flags in `init()`
 - Access to parsed values via `this.args` and `this.flags`
-- Global flags like `--log-level` and `--json`
+- Global flags like `--log-level`, `--json`, and `--experimental`
 - Consistent error handling
+
+**Experimental Commands:**
+
+Commands can be marked as experimental to hide them from default help output. Experimental commands are useful for:
+- Testing new features with opt-in users
+- Iterating on command interfaces before stabilization
+- Features that may change or be removed
+
+To mark a command as experimental, add the `isExperimental` static property:
+
+```typescript
+export default class MyCommand extends BaseCommand<typeof MyCommand> {
+  static isExperimental = true  // Marks command as experimental
+  static description = 'My experimental feature'
+
+  async run(): Promise<void> {
+    // Implementation
+  }
+}
+```
+
+**Experimental Command Behavior:**
+- Hidden from `homelab help` by default
+- Shown in `homelab --experimental help` or when `HOMELAB_CLI_EXPERIMENTAL=true`
+- Still executable without the flag (just hidden from help)
+- Shows warning message when executed with `--experimental` flag or environment variable
+
+**Current Experimental Commands:**
+- `homelab config read` - Read CLI configuration
+- `homelab config write` - Write CLI configuration
+- `homelab exec demo` - Command execution demonstration
+- `homelab prompt demo` - Interactive prompts demonstration
 
 ### Testing Pattern
 
