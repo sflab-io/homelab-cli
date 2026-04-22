@@ -1,0 +1,36 @@
+schema: spec-driven
+
+context: |
+  **homelab-cli** — TypeScript CLI binary (`homelab`) built with oclif v4.
+  Node >= 18, pnpm, ES modules only (`.js` extensions in all imports, even for `.ts` source files).
+
+  **Layered architecture** (strict, no shortcuts):
+  Command → Service → Repository → Model/Schema
+  - Commands: thin, parse args/flags, call service via Factory, convert Result to oclif error
+  - Services: business logic, Zod validation, return `Result<T>`
+  - Repositories: implement typed interfaces, return `Result<T>`, swappable (real/mock)
+  - Factories: wire dependencies; commands call factory, never `new Service()` directly
+
+  **Result pattern**: `{ success: true; data: T } | { success: false; error: Error }` — no throwing across layers.
+  **Zod**: source of truth for all DTOs, config schemas, and API response shapes.
+  **DI**: constructor injection only, no DI container. Interfaces live in `repositories/interfaces/`.
+
+  **Testing**: Mocha + Chai + `@oclif/test`. `--forbid-only` always. Never `--no-verify`.
+  Commands tested via `runCommand()`. Services tested with mock repos via constructor injection.
+  Every layer (command, service, repository) needs a corresponding test file.
+
+  **Commit style**: Conventional Commits. `pnpm test` (includes lint) must pass before every commit.
+
+rules:
+  tasks:
+    - One task = one layer or one file (command, service, repository, factory, test)
+    - Always include a task to run `pnpm run build && pnpm test` as the final step
+    - Reference the exact file path in each task title (e.g. "Create src/services/foo.service.ts")
+  spec:
+    - Use Given/When/Then format for acceptance criteria
+    - Specify the Result type signature (success data shape + error type) for each service method
+    - List which repository interface methods are needed
+  proposal:
+    - Include a "Non-goals" section
+    - State which architecture pattern applies (layered vs. command-only)
+    - Keep under 400 words
